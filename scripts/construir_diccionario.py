@@ -4,15 +4,18 @@ construir_diccionario.py
 ---------------------------------------------------------------
 Une el glosario (dataset/glosario.csv) con los clips de señas
 (dataset/senas/*.json, sintéticos o capturados con MediaPipe) y
-genera web/lsm-diccionario.js, que carga el widget en el navegador.
+genera app/public/lsm-diccionario.json, que carga la app de React y que
+leen los scripts de Node del dataset.
 
-El archivo resultante define:
-  window.LSM_DICCIONARIO = {
+Contenido del JSON:
+  {
      version, fps, generado,
      glosas:   { GLOSA: {cat, nm, origen, frames:[...]}, ... },
      alfabeto: { "A": {frames}, ..., "0": {frames}, ... },
      lexico:   { "palabra_normalizada": "GLOSA", ... }
   }
+
+Ejecútalo cada vez que agregues una fila al glosario o un clip nuevo.
 
 Uso:
     python construir_diccionario.py
@@ -27,7 +30,7 @@ from datetime import date
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 GLOSARIO = os.path.join(BASE, "dataset", "glosario.csv")
 SENAS = os.path.join(BASE, "dataset", "senas")
-SALIDA = os.path.join(BASE, "web", "lsm-diccionario.js")
+SALIDA = os.path.join(BASE, "app", "public", "lsm-diccionario.json")
 
 
 def clave(s):
@@ -73,11 +76,9 @@ def main():
 
     dic = {"version": "0.1", "fps": fps, "generado": date.today().isoformat(),
            "glosas": glosas, "alfabeto": alfabeto, "lexico": lexico}
+    os.makedirs(os.path.dirname(SALIDA), exist_ok=True)
     with open(SALIDA, "w", encoding="utf-8") as f:
-        f.write("/* Generado por scripts/construir_diccionario.py — no editar a mano */\n")
-        f.write("window.LSM_DICCIONARIO = ")
         json.dump(dic, f, ensure_ascii=False, separators=(",", ":"))
-        f.write(";\n")
     kb = os.path.getsize(SALIDA) / 1024
     reales = sum(1 for g in glosas.values() if g["origen"] == "mediapipe")
     print(f"Glosas: {len(glosas)} (capturadas: {reales}, sintéticas: {len(glosas) - reales})")

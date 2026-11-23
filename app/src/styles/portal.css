@@ -1,0 +1,77 @@
+/* portal.css — Estilos de la página de ejemplo (no del widget). */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1d1d1f;
+  background: #f6f7f6;
+}
+.portal-cabecera {
+  background: #0b6e4f;
+  color: #fff;
+  padding: 18px 32px;
+}
+.portal-cabecera small {
+  opacity: 0.85;
+}
+.portal-aviso {
+  background: #ffbf47;
+  color: #3a2a00;
+  padding: 8px 32px;
+  font-size: 14px;
+}
+.portal-contenido {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 32px 120px;
+}
+.portal-contenido h1 {
+  font-size: 28px;
+  margin: 8px 0 4px;
+}
+.portal-contenido h2 {
+  font-size: 20px;
+  margin-top: 28px;
+  color: #0b6e4f;
+}
+.portal-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.portal-tarjeta {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+.portal-tarjeta h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+.portal-tarjeta p {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+.portal-ejemplo {
+  background: #fff;
+  border-left: 4px solid #0b6e4f;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin: 8px 0;
+}
+.portal-codigo {
+  overflow: auto;
+  font-size: 14px;
+}
+code {
+  background: #eaeaea;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.portal-pie {
+  font-size: 13px;
+  color: #555;
+  text-align: center;
+  padding: 16px;
+}

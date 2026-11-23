@@ -1,94 +1,84 @@
-# lsm-avatar-dev — Traductor Español → LSM con avatar (prototipo tipo VLibras)
+# lsm-avatar-dev — Traductor Español → LSM con avatar (React)
 
-Un widget que se agrega a cualquier página web con una sola etiqueta <script>. Muestra un botón
-flotante **LSM**; la persona hace clic sobre un texto y un avatar 2D lo interpreta en Lengua
-de Señas Mexicana (glosas + animación por keypoints). Las palabras sin seña se deletrean con
-dactilología.
+Prototipo de traductor automático de **español escrito** a **Lengua de Señas Mexicana (LSM)**
+con un avatar 2D expresivo, inspirado en VLibras (Brasil). Hecho con **React + Vite**.
 
-> ⚠ Las señas incluidas son **sintéticas (placeholders)** y **no están validadas** por la
-> comunidad Sorda. El flujo del proyecto las reemplaza por capturas reales de intérpretes con
-> MediaPipe (ver "Generar el dataset").
+**Demo en línea:** https://marlon1117.github.io/Lsm-avatar-dev/ (funciona en iPad, celular y PC)
+
+> ⚠ Las 75 señas incluidas son **sintéticas** (generadas por código) y **no están validadas**
+> por la comunidad Sorda. El proyecto está preparado para reemplazarlas por capturas reales de
+> intérpretes con MediaPipe.
+
+## Diagrama del sistema
+
+![Diagrama del sistema](docs/diagrama.png)
+
+## Documentación
+
+| Documento | Qué explica |
+|---|---|
+| [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) | Diagrama del sistema, flujo de datos, qué hace cada archivo de React |
+| [docs/DATASET.md](docs/DATASET.md) | Cómo se genera el dataset (glosario, corpus, señas, dataset de prueba) y cómo se usa |
+| [docs/AGREGAR_SENAS_Y_RECONOCIMIENTO.md](docs/AGREGAR_SENAS_Y_RECONOCIMIENTO.md) | Paso a paso para agregar señas, palabras, reglas y reconocimiento |
 
 ## Estructura
 
 ```
-lsm-traductor/
-├── web/
-│   ├── index.html            Página de demostración (portal ficticio)
-│   ├── lsm-widget.js         Widget: botón, panel, reproductor
-│   ├── avatar-lsm.js         Avatar 2D expresivo (rostro, cejas, boca, mirada, cabeza)
-│   ├── secuencia-lsm.js      Glosas → secuencia continua de frames (widget y dataset)
-│   ├── lsm-todo-en-uno.js    Paquete para integrar con una sola etiqueta
-│   ├── traductor-lsm.js      Traductor por reglas Español → glosas (navegador y Node)
-│   └── lsm-diccionario.js    Diccionario generado: glosas + keypoints + léxico
-├── dataset/
-│   ├── glosario.csv          Glosa ↔ palabras en español ↔ rasgos fonológicos
-│   ├── oraciones_es.csv      Oraciones fuente (y glosa de referencia del intérprete)
-│   ├── corpus_paralelo.csv   Salida: español ↔ glosa automática ↔ referencia ↔ WER
-│   ├── palabras_sin_sena.csv Prioridad de grabación
-│   ├── senas/<GLOSA>.json    Un clip de keypoints por seña (sintético o MediaPipe)
-│   ├── prueba/               Dataset de prueba: 3 frases × 5 señantes simulados,
-│   │                         etiquetas por frame, segmentos, .npz y videos MP4
-│   └── capturas/             (se crea) todas las repeticiones capturadas, para la tesis
-├── scripts/
-│   ├── generar_senas_sinteticas.py   Placeholders con el mismo formato que MediaPipe
-│   ├── extraer_poses_mediapipe.py    Videos de intérpretes → clips de keypoints
-│   ├── construir_diccionario.py      glosario + clips → web/lsm-diccionario.js
-│   ├── generar_corpus.mjs            Corpus paralelo + métricas (usa el mismo traductor)
-│   ├── generar_dataset_prueba.mjs    Frases → keypoints etiquetados con 5 señantes simulados
-│   ├── cargar_dataset_prueba.py      Carga el dataset de prueba en NumPy / .npz
-│   ├── renderizar_video.py           Videos MP4 del avatar a partir de las muestras
-│   └── empaquetar.py                 Genera web/lsm-todo-en-uno.js
-└── (documentos de la propuesta: fuera del repositorio)
+Lsm-avatar-dev/
+├── app/                          ← Aplicación React (código fuente)
+│   ├── src/
+│   │   ├── lib/                  ← Lógica pura (sin React): la usan la app Y los scripts
+│   │   │   ├── formato.js            Formato del frame (108 números)
+│   │   │   ├── recursosLinguisticos.js  Listas de palabras y reglas del español
+│   │   │   ├── traductor.js          Español → glosas
+│   │   │   ├── secuencia.js          Glosas → secuencia continua de frames
+│   │   │   └── avatar/               Dibujo del avatar en canvas (cuerpo, cabeza, rostro, manos)
+│   │   ├── hooks/                ← Hooks de React
+│   │   │   ├── useDiccionario.js     Descarga lsm-diccionario.json
+│   │   │   ├── useReproductor.js     Animación con requestAnimationFrame
+│   │   │   └── useTextoDeLaPagina.js Clic / selección sobre la página
+│   │   ├── components/           ← Componentes de React
+│   │   │   ├── LSMWidget.jsx         Componente principal (estado + composición)
+│   │   │   ├── PanelLSM.jsx, BotonFlotante.jsx, ListaGlosas.jsx, Controles.jsx, EntradaTexto.jsx
+│   │   ├── pages/PortalEjemplo.jsx   Página ficticia de prueba
+│   │   ├── App.jsx, main.jsx         App de demostración
+│   │   └── embed.jsx                 Widget de un solo <script> para cualquier página
+│   └── public/lsm-diccionario.json   Diccionario generado (señas + léxico)
+├── demo/                         ← App compilada (lo que publica GitHub Pages)
+├── dataset/                      ← Datos: glosario, corpus, clips de señas, dataset de prueba
+├── scripts/                      ← Generación del dataset (Python y Node)
+└── docs/                         ← Documentación
 ```
 
-## Probar la demo
-
-- **En línea (GitHub Pages):** `https://<usuario>.github.io/lsm-avatar-dev/` — funciona en iPad, celular y PC.
-- **Local:** abre `web/index.html` en el navegador (no requiere servidor).
-
-Pulsa **LSM** y toca o haz clic en cualquier párrafo, o escribe una frase en el panel.
-
-## Ejecutar los scripts desde el iPad (GitHub Codespaces)
-
-En el repositorio: **Code → Codespaces → Create codespace**. Se abre VS Code en Safari con
-Python, Node, MediaPipe, ffmpeg y Playwright ya instalados (`.devcontainer/`). Ahí corre
-los comandos de la sección "Generar el dataset". Para ver la demo dentro del Codespace:
-`python -m http.server 8000` y abre el puerto 8000.
-
-## Integrarlo en otro sitio
-
-```html
-<script src="lsm-todo-en-uno.js" data-auto="true" data-color="#0b6e4f"></script>
-```
-API: `LSMWidget.init({color, posicion:"derecha"|"izquierda"})`, `LSMWidget.traducir("texto")`.
-
-## Generar el dataset
+## Ejecutar
 
 ```bash
-# 1) Placeholders (para que la demo funcione desde el día 1)
-python scripts/generar_senas_sinteticas.py
-
-# 2) Señas reales: grabar videos  videos/GLOSA__S01__r1.mp4  (1 seña por video)
-pip install mediapipe opencv-python numpy
-python scripts/extraer_poses_mediapipe.py --videos videos/
-#    (no sobrescribe; cada clip real reemplaza al sintético de la misma glosa)
-
-# 3) Reconstruir el diccionario del widget
-python scripts/construir_diccionario.py
-
-# 4) Corpus paralelo y métricas (cobertura léxica, WER contra referencia del intérprete)
-node scripts/generar_corpus.mjs
-
-# 5) Paquete del widget, dataset de prueba y videos
-python scripts/empaquetar.py
-node scripts/generar_dataset_prueba.mjs
-python scripts/cargar_dataset_prueba.py --npz
-python scripts/renderizar_video.py --ids F01_S01 F02_S01 F03_S01
+cd app
+npm install
+npm run dev      # http://localhost:5173 con recarga automática
+npm test         # pruebas del traductor y del secuenciador
+npm run build    # compila en ../demo (GitHub Pages)
 ```
 
-Formato de cada frame: 9 puntos de pose + 21 mano derecha + 21 mano izquierda (x,y en
-0–1000, `-1` = no detectado) + 6 canales no manuales: cejas arriba, cejas fruncidas,
-boca abierta, sonrisa (−100..100), giro de cabeza y asentimiento (−100..100). Es el mismo vector de keypoints
-que usa el reconocedor de bajo costo de la tesis, de modo que **un solo dataset sirve para
-síntesis (avatar) y para reconocimiento**.
+## Insertar el widget en cualquier página (como VLibras)
+
+```html
+<script charset="utf-8"
+        src="https://marlon1117.github.io/Lsm-avatar-dev/demo/widget/lsm-widget.js"
+        data-auto="true" data-color="#0b6e4f"></script>
+```
+
+## Regenerar el dataset
+
+```bash
+python scripts/generar_senas_sinteticas.py     # clips placeholder
+python scripts/construir_diccionario.py        # → app/public/lsm-diccionario.json
+node   scripts/generar_corpus.mjs              # corpus paralelo + métricas
+node   scripts/generar_dataset_prueba.mjs      # dataset de prueba etiquetado
+python scripts/cargar_dataset_prueba.py --npz  # → NumPy / .npz
+python scripts/renderizar_video.py --ids F01_S01
+python scripts/reconocedor_base_dtw.py         # reconocedor base (seña → glosa)
+```
+
+Desde el iPad: **Code → Codespaces → Create codespace** (el entorno ya trae Python, Node,
+MediaPipe y ffmpeg; ver `.devcontainer/`).

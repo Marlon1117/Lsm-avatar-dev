@@ -26,7 +26,7 @@ Requisitos:
 
 Uso:
     python extraer_poses_mediapipe.py --videos ../videos --salida ../dataset/senas
-    python construir_diccionario.py      # regenera web/lsm-diccionario.js
+    python construir_diccionario.py      # regenera app/public/lsm-diccionario.json
 """
 import argparse
 import glob

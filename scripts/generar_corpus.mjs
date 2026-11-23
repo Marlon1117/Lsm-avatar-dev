@@ -1,87 +1,112 @@
 #!/usr/bin/env node
 /**
  * generar_corpus.mjs
- * ---------------------------------------------------------------
- * Genera el corpus paralelo español -> glosa LSM usando EXACTAMENTE el
- * mismo traductor que el widget (web/traductor-lsm.js), para que el
- * dataset y el prototipo nunca diverjan.
+ * ---------------------------------------------------------------------------
+ * Genera el CORPUS PARALELO español → glosa LSM y sus métricas.
  *
- * Entrada : dataset/oraciones_es.csv  (id, dominio, oracion_es, glosa_referencia, fuente_referencia)
- * Salida  : dataset/corpus_paralelo.csv  +  resumen en consola
- *   - glosa_auto        traducción automática
- *   - wer               Word Error Rate a nivel glosa vs referencia (si existe)
- *   - cobertura         % de palabras de contenido con seña en el diccionario
- *   - palabras_sin_sena candidatas a grabar (alimentan el plan de captura)
+ * Usa exactamente el mismo traductor que la app de React
+ * (app/src/lib/traductor.js), así el dataset y la demo nunca se contradicen.
  *
- * Uso:  node scripts/generar_corpus.mjs
+ * Entrada:  dataset/oraciones_es.csv
+ *           columnas: id, dominio, oracion_es, glosa_referencia, fuente_referencia
+ *           (glosa_referencia la escribe un intérprete; puede ir vacía)
+ *
+ * Salida:   dataset/corpus_paralelo.csv   una fila por oración con:
+ *             glosa_auto       traducción automática
+ *             wer              error contra la referencia (si existe)
+ *             cobertura        % de palabras que sí tienen seña
+ *             palabras_sin_sena  las que se deletrearon
+ *           dataset/palabras_sin_sena.csv  ranking de palabras a grabar primero
+ *
+ * Uso:      node scripts/generar_corpus.mjs
  */
-import fs from "node:fs";
+
 import path from "node:path";
-import { createRequire } from "node:module";
-import { fileURLToPath } from "node:url";
+import { traducir, wer } from "../app/src/lib/traductor.js";
+import { RUTAS, cargarDiccionario, leerCSV, escribirCSV } from "./utilidades.mjs";
 
-const require = createRequire(import.meta.url);
-const BASE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-globalThis.window = {};
-require(path.join(BASE, "web", "lsm-diccionario.js"));
-const Traductor = require(path.join(BASE, "web", "traductor-lsm.js"));
-const tr = new Traductor(globalThis.window.LSM_DICCIONARIO);
+const diccionario = cargarDiccionario();
+const oraciones = leerCSV(path.join(RUTAS.dataset, "oraciones_es.csv"));
 
-function parseCSV(txt) {
-  const filas = []; let fila = [], campo = "", q = false;
-  for (let i = 0; i < txt.length; i++) {
-    const c = txt[i];
-    if (q) { if (c === '"' && txt[i + 1] === '"') { campo += '"'; i++; } else if (c === '"') q = false; else campo += c; }
-    else if (c === '"') q = true;
-    else if (c === ",") { fila.push(campo); campo = ""; }
-    else if (c === "\n" || c === "\r") { if (c === "\r" && txt[i + 1] === "\n") i++; fila.push(campo); filas.push(fila); fila = []; campo = ""; }
-    else campo += c;
+const filasCorpus = [];
+const conteoSinSena = new Map(); // palabra → veces que se deletreó
+let palabrasDeContenido = 0;
+let palabrasConSena = 0;
+let sumaWer = 0;
+let oracionesConReferencia = 0;
+
+for (const fila of oraciones) {
+  // 1) Traducir (puede salir más de una oración si el texto tiene varios puntos)
+  const resultado = traducir(fila.oracion_es, diccionario);
+  const tokens = resultado.flatMap((o) => o.tokens);
+  const glosaAuto = resultado.map((o) => o.glosa).join(" // ");
+
+  // 2) Cobertura: no contamos los pronombres que el traductor agregó solo
+  const deContenido = tokens.filter((t) => t.regla !== "sujeto-implicito");
+  const conSena = deContenido.filter((t) => t.tipo === "sena");
+  const deletreadas = deContenido.filter((t) => t.tipo === "dactilologia");
+
+  for (const t of deletreadas) {
+    const palabra = t.original.toLowerCase();
+    conteoSinSena.set(palabra, (conteoSinSena.get(palabra) || 0) + 1);
   }
-  if (campo || fila.length) { fila.push(campo); filas.push(fila); }
-  const [cab, ...resto] = filas.filter(f => f.some(x => x !== ""));
-  return resto.map(f => Object.fromEntries(cab.map((h, i) => [h, f[i] ?? ""])));
-}
-const esc = v => /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v);
+  palabrasDeContenido += deContenido.length;
+  palabrasConSena += conSena.length;
 
-const filas = parseCSV(fs.readFileSync(path.join(BASE, "dataset", "oraciones_es.csv"), "utf8"));
-const salida = [];
-const sinSena = new Map();
-let totCont = 0, totSena = 0, sumWer = 0, nWer = 0;
-
-for (const f of filas) {
-  const res = tr.traducir(f.oracion_es);
-  const tokens = res.flatMap(o => o.tokens);
-  const glosa = res.map(o => o.glosa).join(" // ");
-  const cont = tokens.filter(t => t.regla !== "sujeto-implicito");
-  const conSena = cont.filter(t => t.tipo === "sena").length;
-  const dts = cont.filter(t => t.tipo === "dactilologia");
-  dts.forEach(t => sinSena.set(t.original.toLowerCase(), (sinSena.get(t.original.toLowerCase()) || 0) + 1));
-  totCont += cont.length; totSena += conSena;
-  let wer = "";
-  if (f.glosa_referencia) {
-    wer = Traductor.wer(glosa.replace(/ \/\/ /g, " "), f.glosa_referencia);
-    sumWer += wer; nWer++;
-    wer = wer.toFixed(3);
+  // 3) WER contra la glosa del intérprete (si ya la escribió)
+  let valorWer = "";
+  if (fila.glosa_referencia) {
+    const error = wer(glosaAuto.replace(/ \/\/ /g, " "), fila.glosa_referencia);
+    sumaWer += error;
+    oracionesConReferencia += 1;
+    valorWer = error.toFixed(3);
   }
-  salida.push({
-    id: f.id, dominio: f.dominio, oracion_es: f.oracion_es, glosa_auto: glosa,
-    glosa_referencia: f.glosa_referencia, fuente_referencia: f.fuente_referencia || "",
-    wer, n_tokens: cont.length, n_senas: conSena, n_dactilologia: dts.length,
-    cobertura: cont.length ? (conSena / cont.length).toFixed(3) : "1.000",
-    palabras_sin_sena: dts.map(t => t.original).join("|"),
-    reglas: tokens.map(t => `${t.glosa}:${t.regla}`).join(" "),
-    estado: f.glosa_referencia ? (f.fuente_referencia === "interprete" ? "validada" : "referencia-propuesta") : "pendiente-interprete",
+
+  // 4) Estado de la oración
+  let estado = "pendiente-interprete";
+  if (fila.glosa_referencia) {
+    estado = fila.fuente_referencia === "interprete" ? "validada" : "referencia-propuesta";
+  }
+
+  filasCorpus.push({
+    id: fila.id,
+    dominio: fila.dominio,
+    oracion_es: fila.oracion_es,
+    glosa_auto: glosaAuto,
+    glosa_referencia: fila.glosa_referencia,
+    fuente_referencia: fila.fuente_referencia || "",
+    wer: valorWer,
+    n_tokens: deContenido.length,
+    n_senas: conSena.length,
+    n_dactilologia: deletreadas.length,
+    cobertura: deContenido.length ? (conSena.length / deContenido.length).toFixed(3) : "1.000",
+    palabras_sin_sena: deletreadas.map((t) => t.original).join("|"),
+    reglas: tokens.map((t) => `${t.glosa}:${t.regla}`).join(" "),
+    estado,
   });
 }
 
-const cols = Object.keys(salida[0]);
-fs.writeFileSync(path.join(BASE, "dataset", "corpus_paralelo.csv"),
-  [cols.join(","), ...salida.map(r => cols.map(c => esc(r[c])).join(","))].join("\n") + "\n");
-const top = [...sinSena.entries()].sort((a, b) => b[1] - a[1]);
-fs.writeFileSync(path.join(BASE, "dataset", "palabras_sin_sena.csv"),
-  "palabra,frecuencia\n" + top.map(([p, n]) => `${esc(p)},${n}`).join("\n") + "\n");
+// --- Guardar archivos --------------------------------------------------------
+escribirCSV(
+  path.join(RUTAS.dataset, "corpus_paralelo.csv"),
+  Object.keys(filasCorpus[0]),
+  filasCorpus
+);
 
-console.log(`Oraciones: ${salida.length}`);
-console.log(`Cobertura léxica: ${(100 * totSena / totCont).toFixed(1)} % (${totSena}/${totCont} palabras de contenido con seña)`);
-console.log(`WER medio vs referencia (${nWer} oraciones): ${nWer ? (sumWer / nWer).toFixed(3) : "n/a"}`);
-console.log(`Palabras sin seña (prioridad de grabación): ${top.slice(0, 12).map(([p, n]) => `${p}(${n})`).join(", ")}`);
+const ranking = [...conteoSinSena.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .map(([palabra, frecuencia]) => ({ palabra, frecuencia }));
+escribirCSV(path.join(RUTAS.dataset, "palabras_sin_sena.csv"), ["palabra", "frecuencia"], ranking);
+
+// --- Resumen ------------------------------------------------------------------
+const cobertura = (100 * palabrasConSena) / palabrasDeContenido;
+console.log(`Oraciones: ${filasCorpus.length}`);
+console.log(`Cobertura léxica: ${cobertura.toFixed(1)} % (${palabrasConSena}/${palabrasDeContenido} palabras con seña)`);
+console.log(
+  `WER medio vs referencia (${oracionesConReferencia} oraciones): ` +
+    (oracionesConReferencia ? (sumaWer / oracionesConReferencia).toFixed(3) : "n/a")
+);
+console.log(
+  "Palabras sin seña (prioridad de grabación): " +
+    ranking.slice(0, 12).map((r) => `${r.palabra}(${r.frecuencia})`).join(", ")
+);

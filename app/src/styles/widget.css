@@ -1,0 +1,232 @@
+/*
+ * widget.css — Estilos del widget LSM.
+ * Todas las clases empiezan con "lsm-" para no chocar con los estilos de la
+ * página donde se inserte. El color principal se controla con --lsm-color.
+ */
+
+.lsm-widget {
+  --lsm-color: #0b6e4f;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1d1d1f;
+}
+.lsm-widget * {
+  box-sizing: border-box;
+}
+
+/* ---------- Botón flotante ---------- */
+.lsm-boton {
+  position: fixed;
+  bottom: 24px;
+  z-index: 2147483646;
+  width: 64px;
+  height: 64px;
+  border: none;
+  border-radius: 50%;
+  background: var(--lsm-color);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s;
+}
+.lsm-boton:hover {
+  transform: scale(1.07);
+}
+.lsm-boton:focus-visible {
+  outline: 3px solid #ffbf47;
+  outline-offset: 3px;
+}
+.lsm-boton svg {
+  width: 28px;
+  height: 28px;
+}
+.lsm-boton span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.lsm-boton--activo {
+  box-shadow: 0 0 0 4px rgba(255, 191, 71, 0.9), 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Posición: derecha o izquierda */
+.lsm-widget--derecha .lsm-boton,
+.lsm-widget--derecha .lsm-panel {
+  right: 24px;
+}
+.lsm-widget--izquierda .lsm-boton,
+.lsm-widget--izquierda .lsm-panel {
+  left: 24px;
+}
+
+/* ---------- Panel ---------- */
+.lsm-panel {
+  position: fixed;
+  bottom: 100px;
+  z-index: 2147483647;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+.lsm-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--lsm-color);
+  color: #fff;
+  font-size: 14px;
+}
+.lsm-cabecera button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Escenario del avatar */
+.lsm-escenario {
+  position: relative;
+}
+.lsm-escenario canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 640 / 600;
+}
+.lsm-letra {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--lsm-color);
+  text-shadow: 0 2px 0 #fff;
+}
+.lsm-estado {
+  position: absolute;
+  inset: auto 0 12px 0;
+  text-align: center;
+  font-size: 13px;
+  color: #444;
+}
+.lsm-estado--error {
+  color: #b00020;
+}
+
+/* Glosas */
+.lsm-glosas {
+  min-height: 54px;
+  max-height: 96px;
+  overflow: auto;
+  padding: 8px 12px;
+  border-top: 1px solid #e4e4e4;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.lsm-glosa {
+  display: inline-block;
+  margin: 1px 2px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: #f1f1f1;
+  font-size: 12px;
+  font-weight: 600;
+}
+.lsm-glosa--deletreo {
+  background: #fff4d6;
+}
+.lsm-glosa--activa {
+  background: var(--lsm-color);
+  color: #fff;
+}
+.lsm-ayuda {
+  margin: 0;
+  font-size: 12px;
+  color: #444;
+}
+
+/* Controles */
+.lsm-controles {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid #e4e4e4;
+}
+.lsm-controles button {
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+  font-size: 13px;
+  cursor: pointer;
+}
+.lsm-velocidad {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+.lsm-velocidad input {
+  width: 80px;
+}
+
+/* Entrada de texto */
+.lsm-entrada {
+  display: flex;
+  gap: 6px;
+  padding: 0 12px 10px;
+}
+.lsm-entrada textarea {
+  flex: 1;
+  height: 42px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 16px; /* 16px evita que Safari en iPad haga zoom al escribir */
+  resize: none;
+}
+.lsm-entrada button {
+  padding: 0 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--lsm-color);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.lsm-entrada button:disabled {
+  opacity: 0.5;
+}
+
+/* Aviso */
+.lsm-aviso {
+  margin: 0;
+  padding: 6px 12px 10px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: #666;
+}
+
+/* Foco visible en todos los controles */
+.lsm-widget button:focus-visible,
+.lsm-widget input:focus-visible,
+.lsm-widget textarea:focus-visible {
+  outline: 2px solid #ffbf47;
+}

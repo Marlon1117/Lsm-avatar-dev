@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """
 renderizar_video.py — Renderiza muestras del dataset de prueba como video MP4
-del avatar (con subtítulo de glosa y frase), usando el MISMO avatar-lsm.js
-del widget en un navegador sin interfaz.
+del avatar (con subtítulo de glosa y frase), usando EXACTAMENTE el mismo código
+de dibujo de la app de React (app/src/lib/avatar/) en un navegador sin interfaz.
+
+Cómo funciona:
+  1. Abre Chromium sin ventana con Playwright.
+  2. Sirve los módulos de app/src/lib/ con una ruta interceptada
+     (http://render.local/...), así el navegador puede importarlos.
+  3. Por cada frame: dibujarAvatar() + subtítulos → PNG.
+  4. ffmpeg une los PNG en un MP4.
 
 Requisitos:  pip install playwright && playwright install chromium ;  ffmpeg
 Uso:
@@ -22,13 +29,20 @@ import tempfile
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 PRUEBA = os.path.join(BASE, "dataset", "prueba")
 
+# Página mínima que importa el dibujo del avatar (módulo ES de la app de React)
+HTML = """<!DOCTYPE html><html><body><script type="module">
+import { dibujarAvatar } from "/lib/avatar/index.js";
+window.dibujarAvatar = dibujarAvatar;
+window.listo = true;
+</script></body></html>"""
+
 JS = r"""
 async ([m, W, H]) => {
   const c = document.createElement('canvas'); c.width = W; c.height = H;
   const x = c.getContext('2d'); const out = [];
   const ms = 1000 / m.fps;
   for (let i = 0; i < m.frames.length; i++) {
-    AvatarLSM.dibujar(x, m.frames[i], { t: i * ms });
+    dibujarAvatar(x, m.frames[i], { tiempo: i * ms });
     // subtítulos
     const g = m.etiquetas_frame[i];
     x.fillStyle = 'rgba(16,24,32,.78)'; x.fillRect(0, H - 92, W, 92);
@@ -47,7 +61,20 @@ async ([m, W, H]) => {
 
 async def renderizar(ids, W=640, H=600):
     from playwright.async_api import async_playwright
-    avatar = open(os.path.join(BASE, "web", "avatar-lsm.js"), encoding="utf-8").read()
+    lib = os.path.join(BASE, "app", "src", "lib")
+
+    async def servir(route):
+        """Responde las peticiones a http://render.local/ con archivos locales."""
+        ruta = route.request.url.split("render.local", 1)[1]
+        if ruta in ("/", "/index.html"):
+            await route.fulfill(body=HTML, content_type="text/html; charset=utf-8")
+        elif ruta.startswith("/lib/"):
+            archivo = os.path.join(lib, ruta[len("/lib/"):])
+            with open(archivo, encoding="utf-8") as f:
+                await route.fulfill(body=f.read(), content_type="text/javascript; charset=utf-8")
+        else:
+            await route.fulfill(status=404, body="")
+
     os.makedirs(os.path.join(PRUEBA, "videos"), exist_ok=True)
     async with async_playwright() as p:
         kw = {"args": ["--no-sandbox"]}
@@ -55,8 +82,9 @@ async def renderizar(ids, W=640, H=600):
             kw["executable_path"] = shutil.which("google-chrome")
         b = await p.chromium.launch(**kw)
         pg = await b.new_page()
-        await pg.set_content("<html><body></body></html>")
-        await pg.add_script_tag(content=avatar)
+        await pg.route("http://render.local/**", servir)
+        await pg.goto("http://render.local/index.html")
+        await pg.wait_for_function("window.listo === true")
         for id_ in ids:
             m = json.load(open(os.path.join(PRUEBA, "muestras", id_ + ".json"), encoding="utf-8"))
             imgs = await pg.evaluate(JS, [m, W, H])
