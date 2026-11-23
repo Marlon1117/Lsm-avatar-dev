@@ -1,0 +1,16 @@
+id,frase_id,texto_es,glosa,senante,velocidad,n_frames,duracion_s,n_senas
+F01_S01,F01,"Hola, buenos días. ¿Cómo estás?",HOLA BUENO DÍA // TÚ CÓMO ?,S01,1,113,7.53,5
+F01_S02,F01,"Hola, buenos días. ¿Cómo estás?",HOLA BUENO DÍA // TÚ CÓMO ?,S02,0.85,133,8.87,5
+F01_S03,F01,"Hola, buenos días. ¿Cómo estás?",HOLA BUENO DÍA // TÚ CÓMO ?,S03,1.2,94,6.27,5
+F01_S04,F01,"Hola, buenos días. ¿Cómo estás?",HOLA BUENO DÍA // TÚ CÓMO ?,S04,1.1,103,6.87,5
+F01_S05,F01,"Hola, buenos días. ¿Cómo estás?",HOLA BUENO DÍA // TÚ CÓMO ?,S05,0.92,123,8.20,5
+F02_S01,F02,"Me llamo Marlon, mucho gusto.",YO NOMBRE DT(M-A-R-L-O-N) MUCHO-GUSTO,S01,1,130,8.67,9
+F02_S02,F02,"Me llamo Marlon, mucho gusto.",YO NOMBRE DT(M-A-R-L-O-N) MUCHO-GUSTO,S02,0.85,153,10.20,9
+F02_S03,F02,"Me llamo Marlon, mucho gusto.",YO NOMBRE DT(M-A-R-L-O-N) MUCHO-GUSTO,S03,1.2,108,7.20,9
+F02_S04,F02,"Me llamo Marlon, mucho gusto.",YO NOMBRE DT(M-A-R-L-O-N) MUCHO-GUSTO,S04,1.1,118,7.87,9
+F02_S05,F02,"Me llamo Marlon, mucho gusto.",YO NOMBRE DT(M-A-R-L-O-N) MUCHO-GUSTO,S05,0.92,141,9.40,9
+F03_S01,F03,"¿Dónde puedo hacer mi trámite? Gracias, hasta luego.",PODER HACER YO TRÁMITE DÓNDE ? // GRACIAS HASTA-LUEGO,S01,1,147,9.80,7
+F03_S02,F03,"¿Dónde puedo hacer mi trámite? Gracias, hasta luego.",PODER HACER YO TRÁMITE DÓNDE ? // GRACIAS HASTA-LUEGO,S02,0.85,173,11.53,7
+F03_S03,F03,"¿Dónde puedo hacer mi trámite? Gracias, hasta luego.",PODER HACER YO TRÁMITE DÓNDE ? // GRACIAS HASTA-LUEGO,S03,1.2,123,8.20,7
+F03_S04,F03,"¿Dónde puedo hacer mi trámite? Gracias, hasta luego.",PODER HACER YO TRÁMITE DÓNDE ? // GRACIAS HASTA-LUEGO,S04,1.1,134,8.93,7
+F03_S05,F03,"¿Dónde puedo hacer mi trámite? Gracias, hasta luego.",PODER HACER YO TRÁMITE DÓNDE ? // GRACIAS HASTA-LUEGO,S05,0.92,160,10.67,7

@@ -1,0 +1,41 @@
+id,dominio,oracion_es,glosa_auto,glosa_referencia,fuente_referencia,wer,n_tokens,n_senas,n_dactilologia,cobertura,palabras_sin_sena,reglas,estado
+S001,saludos,"Hola, me llamo Marlon.",HOLA YO NOMBRE DT(M-A-R-L-O-N),HOLA YO NOMBRE DT(M-A-R-L-O-N),propuesta-equipo,0.000,4,3,1,0.750,marlon,HOLA:lexico YO:lexico NOMBRE:lexico DT(M-A-R-L-O-N):sin-seña,referencia-propuesta
+S002,saludos,Buenos días.,BUENO DÍA,BUENO DÍA,propuesta-equipo,0.000,2,2,0,1.000,,BUENO:lexico DÍA:lexico,referencia-propuesta
+S003,saludos,Gracias por esperar.,GRACIAS ESPERAR,GRACIAS ESPERAR,propuesta-equipo,0.000,2,2,0,1.000,,GRACIAS:lexico ESPERAR:lexico,referencia-propuesta
+S004,saludos,Bienvenidos a la oficina de atención ciudadana.,BIENVENIDO DT(O-F-I-C-I-N-A) ATENCIÓN PERSONA,,,,4,3,1,0.750,oficina,BIENVENIDO:lexico DT(O-F-I-C-I-N-A):sin-seña ATENCIÓN:lexico PERSONA:lexico,pendiente-interprete
+S005,saludos,Buenas noches a todos.,BUENO NOCHE TODOS,,,,3,3,0,1.000,,BUENO:lexico NOCHE:lexico TODOS:lexico,pendiente-interprete
+S006,tramites,Bienvenidos al portal de trámites del gobierno.,BIENVENIDO PÁGINA TRÁMITE GOBIERNO,BIENVENIDO PÁGINA GOBIERNO TRÁMITE,propuesta-equipo,0.500,4,4,0,1.000,,BIENVENIDO:lexico PÁGINA:lexico TRÁMITE:lexico GOBIERNO:lexico,referencia-propuesta
+S007,tramites,¿Cómo puedo solicitar una cita en línea?,YO PODER INSCRIBIR CITA INTERNET CÓMO ?,INTERNET CITA INSCRIBIR PODER CÓMO ?,propuesta-equipo,0.667,5,5,0,1.000,,YO:sujeto-implicito PODER:irregular INSCRIBIR:lexico CITA:lexico INTERNET:lexico CÓMO:lexico,referencia-propuesta
+S008,tramites,Necesitas 3 documentos para registrarte.,TÚ NECESITAR #3 DOCUMENTO INSCRIBIR,TÚ INSCRIBIR DOCUMENTO #3 NECESITAR,propuesta-equipo,0.800,4,3,0,0.750,,TÚ:sujeto-implicito NECESITAR:verbo:as #3:numero DOCUMENTO:lexico INSCRIBIR:clitico+lexico,referencia-propuesta
+S009,tramites,¿Qué necesito para el trámite?,YO NECESITAR TRÁMITE QUÉ ?,TRÁMITE YO NECESITAR QUÉ ?,propuesta-equipo,0.400,3,3,0,1.000,,YO:sujeto-implicito NECESITAR:verbo:o TRÁMITE:lexico QUÉ:lexico,referencia-propuesta
+S010,tramites,"No tengo el documento, ¿qué hago?",YO TENER DOCUMENTO HACER NO QUÉ ?,,,,5,5,0,1.000,,YO:sujeto-implicito TENER:irregular DOCUMENTO:lexico HACER:irregular NO:lexico QUÉ:lexico,pendiente-interprete
+S011,tramites,Agenda tu cita en línea para hacer tu trámite.,CITA TÚ CITA INTERNET HACER TÚ TRÁMITE,,,,7,7,0,1.000,,CITA:verbo:a TÚ:lexico CITA:lexico INTERNET:lexico HACER:lexico TÚ:lexico TRÁMITE:lexico,pendiente-interprete
+S012,tramites,El horario de atención es de 9 a 3.,HORA ATENCIÓN #9 #3,,,,4,2,0,0.500,,HORA:lexico ATENCIÓN:lexico #9:numero #3:numero,pendiente-interprete
+S013,tramites,Llama por teléfono o escribe en la página.,LLAMAR TELÉFONO DT(E-S-C-R-I-B-E) PÁGINA,,,,4,3,1,0.750,escribe,LLAMAR:verbo:a TELÉFONO:lexico DT(E-S-C-R-I-B-E):sin-seña PÁGINA:lexico,pendiente-interprete
+S014,tramites,¿Dónde puedo preguntar?,YO PODER PREGUNTAR DÓNDE ?,,,,3,3,0,1.000,,YO:sujeto-implicito PODER:irregular PREGUNTAR:lexico DÓNDE:lexico,pendiente-interprete
+S015,tramites,Su solicitud fue registrada.,ÉL INSCRIBIR,,,,2,2,0,1.000,,ÉL:lexico INSCRIBIR:lexico,pendiente-interprete
+S016,tramites,Espere su turno por favor.,ESPERAR ÉL CITA POR-FAVOR,,,,4,4,0,1.000,,ESPERAR:verbo:e ÉL:lexico CITA:lexico POR-FAVOR:lexico,pendiente-interprete
+S017,derechos,Las personas sordas tienen derecho a la información en Lengua de Señas Mexicana.,PERSONA SORDO TENER DERECHO INFORMACIÓN LENGUA SEÑAS MÉXICO,PERSONA SORDO INFORMACIÓN LENGUA SEÑAS MÉXICO DERECHO TENER,propuesta-equipo,0.500,8,8,0,1.000,,PERSONA:lexico SORDO:lexico TENER:irregular DERECHO:lexico INFORMACIÓN:lexico LENGUA:lexico SEÑAS:lexico MÉXICO:lexico,referencia-propuesta
+S018,derechos,Todos los ciudadanos tienen derecho a la salud.,TODOS PERSONA TENER DERECHO SALUD,,,,5,5,0,1.000,,TODOS:lexico PERSONA:lexico TENER:irregular DERECHO:lexico SALUD:lexico,pendiente-interprete
+S019,derechos,El servicio es gratuito para todas las personas.,SERVICIO DT(G-R-A-T-U-I-T-O) TODOS PERSONA,,,,4,3,1,0.750,gratuito,SERVICIO:lexico DT(G-R-A-T-U-I-T-O):sin-seña TODOS:lexico PERSONA:lexico,pendiente-interprete
+S020,salud,¿Dónde está el hospital?,SALUD DÓNDE ?,,,,2,2,0,1.000,,SALUD:lexico DÓNDE:lexico,pendiente-interprete
+S021,salud,Necesito una cita con el médico mañana.,MAÑANA YO NECESITAR CITA SALUD,,,,4,4,0,1.000,,MAÑANA:lexico YO:sujeto-implicito NECESITAR:verbo:o CITA:lexico SALUD:lexico,pendiente-interprete
+S022,salud,Hoy mi familia y yo queremos información sobre el servicio de salud.,HOY YO FAMILIA YO QUERER INFORMACIÓN SERVICIO SALUD,,,,8,8,0,1.000,,HOY:lexico YO:lexico FAMILIA:lexico YO:lexico QUERER:irregular INFORMACIÓN:lexico SERVICIO:lexico SALUD:lexico,pendiente-interprete
+S023,educacion,Mañana voy a la universidad a estudiar.,MAÑANA YO IR UNIVERSIDAD ESTUDIAR,MAÑANA YO UNIVERSIDAD IR ESTUDIAR,propuesta-equipo,0.400,4,4,0,1.000,,MAÑANA:lexico YO:sujeto-implicito IR:irregular UNIVERSIDAD:lexico ESTUDIAR:lexico,referencia-propuesta
+S024,educacion,Los estudiantes sordos necesitan intérprete en la escuela.,ESTUDIAR SORDO NECESITAR DT(I-N-T-E-R-P-R-E-T-E) ESCUELA,,,,5,4,1,0.800,intérprete,ESTUDIAR:lexico SORDO:lexico NECESITAR:verbo:an DT(I-N-T-E-R-P-R-E-T-E):sin-seña ESCUELA:lexico,pendiente-interprete
+S025,educacion,¿Cuándo es la inscripción?,INSCRIBIR CUÁNDO ?,,,,2,2,0,1.000,,INSCRIBIR:lexico CUÁNDO:lexico,pendiente-interprete
+S026,educacion,Yo estudio en la universidad.,YO ESTUDIAR UNIVERSIDAD,,,,3,3,0,1.000,,YO:lexico ESTUDIAR:lexico UNIVERSIDAD:lexico,pendiente-interprete
+S027,educacion,Mi amigo es sordo y trabaja aquí.,YO AMIGO SORDO TRABAJAR AQUÍ,,,,5,5,0,1.000,,YO:lexico AMIGO:lexico SORDO:lexico TRABAJAR:verbo:a AQUÍ:lexico,pendiente-interprete
+S028,vida-diaria,¿Cómo te llamas?,TÚ NOMBRE QUÉ ?,,,,3,3,0,1.000,,TÚ:lexico NOMBRE:lexico QUÉ:lexico,pendiente-interprete
+S029,vida-diaria,¿Dónde vives?,TÚ VIVIR DÓNDE ?,,,,2,2,0,1.000,,TÚ:sujeto-implicito VIVIR:verbo:es DÓNDE:lexico,pendiente-interprete
+S030,vida-diaria,Ayer no fui al trabajo.,AYER IR TRABAJAR NO,,,,4,4,0,1.000,,AYER:lexico IR:irregular TRABAJAR:lexico NO:lexico,pendiente-interprete
+S031,vida-diaria,Quiero agua por favor.,YO QUERER AGUA POR-FAVOR,,,,3,3,0,1.000,,YO:sujeto-implicito QUERER:irregular AGUA:lexico POR-FAVOR:lexico,pendiente-interprete
+S032,vida-diaria,Yo no entiendo.,YO ENTENDER NO,,,,3,3,0,1.000,,YO:lexico ENTENDER:irregular NO:lexico,pendiente-interprete
+S033,vida-diaria,¿Quién es tu familia?,TÚ FAMILIA QUIÉN ?,,,,3,3,0,1.000,,TÚ:lexico FAMILIA:lexico QUIÉN:lexico,pendiente-interprete
+S034,vida-diaria,Nosotros vamos a comer en casa.,NOSOTROS IR COMER CASA,,,,4,4,0,1.000,,NOSOTROS:lexico IR:irregular COMER:lexico CASA:lexico,pendiente-interprete
+S035,vida-diaria,¿Puedes ayudarme?,TÚ PODER AYUDAR ?,,,,2,2,0,1.000,,TÚ:sujeto-implicito PODER:irregular AYUDAR:clitico+lexico,pendiente-interprete
+S036,vida-diaria,Sí entiendo la Lengua de Señas Mexicana.,SÍ YO ENTENDER LENGUA SEÑAS MÉXICO,,,,5,5,0,1.000,,SÍ:lexico YO:sujeto-implicito ENTENDER:irregular LENGUA:lexico SEÑAS:lexico MÉXICO:lexico,pendiente-interprete
+S037,vida-diaria,¿Cuántos años tienes?,DT(A-Ñ-O-S) TÚ TENER CUÁNTO ?,,,,3,2,1,0.667,años,DT(A-Ñ-O-S):sin-seña TÚ:sujeto-implicito TENER:irregular CUÁNTO:lexico,pendiente-interprete
+S038,vida-diaria,Mi teléfono es 2281234567.,YO TELÉFONO #2281234567,,,,3,2,0,0.667,,YO:lexico TELÉFONO:lexico #2281234567:numero,pendiente-interprete
+S039,vida-diaria,Ella vive en Xalapa.,ÉL VIVIR DT(X-A-L-A-P-A),,,,3,2,1,0.667,xalapa,ÉL:lexico VIVIR:verbo:e DT(X-A-L-A-P-A):sin-seña,pendiente-interprete
+S040,vida-diaria,¿Por qué no vienes hoy?,HOY TÚ VENIR NO PORQUÉ ?,,,,4,4,0,1.000,,HOY:lexico TÚ:sujeto-implicito VENIR:irregular NO:lexico PORQUÉ:lexico,pendiente-interprete

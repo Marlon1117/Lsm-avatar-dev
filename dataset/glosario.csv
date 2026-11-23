@@ -1,0 +1,76 @@
+glosa,palabras_es,categoria,configuracion,ubicacion,movimiento,manos,no_manual,estado
+HOLA,hola|saludo|saludar|saludos,saludo,B,sien,oscilar hacia afuera x2,1,,sintetico
+GRACIAS,gracias|agradecer|agradecimiento,saludo,B,boca,de la boca hacia adelante,1,,sintetico
+POR-FAVOR,favor|porfavor,saludo,B,pecho,circular sobre el pecho,1,,sintetico
+BIENVENIDO,bienvenido|bienvenida|bienvenidos|bienvenidas,saludo,B,lateral,hacia el pecho,2,,sintetico
+BUENO,bueno|buena|buenos|buenas,adjetivo,B,boca,boca hacia abajo-adelante,1,,sintetico
+BIEN,bien|correcto,adverbio,A,neutral,hacia adelante,1,,sintetico
+MAL,mal|malo|mala|incorrecto,adverbio,B,boca,hacia abajo girando,1,,sintetico
+DÍA,dia|dias,tiempo,1,lateral,arco,2,,sintetico
+TARDE,tarde|tardes,tiempo,B,lateral alto,descenso,2,,sintetico
+NOCHE,noche|noches,tiempo,C,centro,descenso,2,,sintetico
+YO,yo|me|mi|mis|conmigo|mio|mia,pronombre,1,pecho,señalar al pecho,1,,sintetico
+TÚ,tu|tus|te|ti|contigo|usted|tuyo,pronombre,1,neutral,señalar al frente,1,,sintetico
+ÉL,el_pron|ella|ellos|ellas|su|sus,pronombre,1,lateral,señalar al lado,1,,sintetico
+NOSOTROS,nosotros|nosotras|nos|nuestro|nuestra|nuestros|nuestras,pronombre,1,pecho,arco de hombro a hombro,1,,sintetico
+USTEDES,ustedes|vosotros,pronombre,1,neutral,arco al frente,1,,sintetico
+PERSONA,persona|personas|gente|ciudadano|ciudadana|ciudadanos|ciudadania|usuario|usuarios,sustantivo,B,neutral,descenso paralelo,2,,sintetico
+TODOS,todos|todas|todo|toda,cuantificador,B,neutral,arco horizontal,1,,sintetico
+QUÉ,que_preg|cual|cuales,interrogativo,5,neutral,vaivén lateral,2,qu,sintetico
+DÓNDE,donde,interrogativo,1,neutral,vaivén del índice,1,qu,sintetico
+CÓMO,como_preg,interrogativo,C,neutral,rotación,2,qu,sintetico
+CUÁNDO,cuando_preg,interrogativo,1,neutral,círculo,1,qu,sintetico
+QUIÉN,quien|quienes,interrogativo,1,barbilla,círculo pequeño,1,qu,sintetico
+CUÁNTO,cuanto|cuanta|cuantos|cuantas,interrogativo,S>5,neutral,abrir mano,2,qu,sintetico
+PORQUÉ,porque_preg,interrogativo,1>Y,sien,descenso,1,qu,sintetico
+NO,no|nunca|tampoco,negacion,1,neutral,vaivén lateral,1,niega,sintetico
+SÍ,si_afirm|claro,afirmacion,S,neutral,flexión de muñeca,1,afirma,sintetico
+AYUDAR,ayudar|ayuda|apoyar|apoyo|asistencia,verbo,A+B,neutral,ascenso conjunto,2,,sintetico
+NECESITAR,necesitar|necesario|necesaria|requerir|requisito|requisitos|deber,verbo,X,neutral,flexión repetida,1,,sintetico
+QUERER,querer|desear,verbo,GARRA,neutral,hacia el pecho,1,,sintetico
+PODER,poder|puede,verbo,S,neutral,descenso,2,,sintetico
+IR,ir|acudir,verbo,1,pecho,hacia afuera,1,,sintetico
+VENIR,venir|llegar,verbo,1,lateral,hacia el pecho,1,,sintetico
+TRABAJAR,trabajar|trabajo|empleo|chamba,verbo,S,neutral,golpe alterno,2,,sintetico
+ESTUDIAR,estudiar|estudio|estudiante|estudiantes|alumno|alumnos,verbo,5+B,neutral,ondular dedos,2,,sintetico
+PREGUNTAR,preguntar|pregunta|preguntas|consultar|consulta,verbo,X,boca,hacia adelante,1,,sintetico
+ESPERAR,esperar|espera,verbo,5,neutral,ondular dedos,2,,sintetico
+COMER,comer|comida,verbo,O,boca,toque repetido,1,,sintetico
+SABER,saber|conocer,verbo,B,sien,hacia la sien,1,,sintetico
+ENTENDER,entender|comprender,verbo,S>1,sien,abrir índice,1,,sintetico
+VIVIR,vivir|vida,verbo,A,pecho,ascenso,2,,sintetico
+LLAMAR,llamar|llamada|marcar,verbo,Y,oreja,separación,1,,sintetico
+HACER,hacer|realizar|elaborar,verbo,S,neutral,alterno,2,,sintetico
+TENER,tener|contar,verbo,5>S,neutral,cerrar hacia el pecho,1,,sintetico
+HOY,hoy|ahora|actual|actualmente,tiempo,B,neutral,descenso,2,,sintetico
+MAÑANA,manana,tiempo,A,mejilla,hacia adelante,1,,sintetico
+AYER,ayer,tiempo,Y,mejilla,hacia atrás,1,,sintetico
+HORA,hora|horas|horario,tiempo,1+S,muñeca,toque en muñeca,2,,sintetico
+NOMBRE,nombre|nombres|llamarse,sustantivo,U,neutral,toque repetido,2,,sintetico
+CASA,casa|hogar|domicilio,sustantivo,B,frente,techo,2,,sintetico
+ESCUELA,escuela|escolar,sustantivo,B,neutral,palmada,2,,sintetico
+UNIVERSIDAD,universidad|facultad,sustantivo,U,sien,círculo,1,,sintetico
+DOCUMENTO,documento|documentos|formato|formulario|papel|papeles|constancia,sustantivo,L,neutral,rectángulo,2,,sintetico
+TRÁMITE,tramite|tramites|gestion|gestiones,sustantivo,B,neutral,voltear palma,2,,sintetico
+INFORMACIÓN,informacion|informar|aviso|avisos|noticia|noticias,sustantivo,O>5,sien,abrir hacia adelante,2,,sintetico
+GOBIERNO,gobierno|gobiernos|gubernamental|secretaria,sustantivo,1,sien,círculo y toque,1,,sintetico
+SERVICIO,servicio|servicios|atender,sustantivo,B,pecho,hacia adelante,2,,sintetico
+CITA,cita|citas|agendar|turno,sustantivo,1+B,neutral,toque en palma,2,,sintetico
+TELÉFONO,telefono|celular|llamada_tel,sustantivo,Y,oreja,hacia la oreja,1,,sintetico
+AGUA,agua,sustantivo,W,barbilla,toque,1,,sintetico
+AMIGO,amigo|amiga|amigos|amigas,sustantivo,X,neutral,enganche,2,,sintetico
+FAMILIA,familia|familias|familiar,sustantivo,F,neutral,círculo,2,,sintetico
+SORDO,sordo|sorda|sordos|sordas,sustantivo,1,oreja,oreja a boca,1,,sintetico
+OYENTE,oyente|oyentes|oir|escuchar,sustantivo,1,oreja,hacia la oreja,1,,sintetico
+SEÑAS,senas|sena|señar,sustantivo,5,neutral,circular alterno,2,,sintetico
+LENGUA,lengua|idioma|lenguaje,sustantivo,1,boca,toque,1,,sintetico
+MÉXICO,mexico|mexicano|mexicana|mexicanos|nacional,sustantivo,M,sien,giro,1,,sintetico
+DERECHO,derecho|derechos|ley,sustantivo,L+B,pecho,hacia adelante,2,,sintetico
+ATENCIÓN,atencion|atender_publico,sustantivo,B,mejilla,hacia adelante paralelo,2,,sintetico
+SALUD,salud|sano|medico|clinica|hospital,sustantivo,5>S,pecho,cerrar al frente,2,,sintetico
+PÁGINA,pagina|paginas|portal|sitio|web,sustantivo,B,neutral,voltear,2,,sintetico
+INTERNET,internet|linea|digital|electronico,sustantivo,5,neutral,giro,2,,sintetico
+INSCRIBIR,inscribir|inscripcion|registro|registrar|registrarse|solicitar|solicitud,verbo,G+B,neutral,trazar en palma,2,,sintetico
+AQUÍ,aqui|aca,adverbio,1,neutral,señalar abajo,1,,sintetico
+MUCHO-GUSTO,gusto|encantado|encantada|mucho_gusto,saludo,B,pecho,círculo y hacia adelante,1,,sintetico
+HASTA-LUEGO,adios|hasta_luego|despedida,saludo,5/B,lateral alto,abrir y cerrar mano,1,,sintetico

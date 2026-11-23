@@ -1,0 +1,41 @@
+id,dominio,oracion_es,glosa_referencia,fuente_referencia
+S001,saludos,"Hola, me llamo Marlon.",HOLA YO NOMBRE DT(M-A-R-L-O-N),propuesta-equipo
+S002,saludos,Buenos días.,BUENO DÍA,propuesta-equipo
+S003,saludos,Gracias por esperar.,GRACIAS ESPERAR,propuesta-equipo
+S004,saludos,Bienvenidos a la oficina de atención ciudadana.,,
+S005,saludos,Buenas noches a todos.,,
+S006,tramites,Bienvenidos al portal de trámites del gobierno.,BIENVENIDO PÁGINA GOBIERNO TRÁMITE,propuesta-equipo
+S007,tramites,¿Cómo puedo solicitar una cita en línea?,INTERNET CITA INSCRIBIR PODER CÓMO ?,propuesta-equipo
+S008,tramites,Necesitas 3 documentos para registrarte.,TÚ INSCRIBIR DOCUMENTO #3 NECESITAR,propuesta-equipo
+S009,tramites,¿Qué necesito para el trámite?,TRÁMITE YO NECESITAR QUÉ ?,propuesta-equipo
+S010,tramites,"No tengo el documento, ¿qué hago?",,
+S011,tramites,Agenda tu cita en línea para hacer tu trámite.,,
+S012,tramites,El horario de atención es de 9 a 3.,,
+S013,tramites,Llama por teléfono o escribe en la página.,,
+S014,tramites,¿Dónde puedo preguntar?,,
+S015,tramites,Su solicitud fue registrada.,,
+S016,tramites,Espere su turno por favor.,,
+S017,derechos,Las personas sordas tienen derecho a la información en Lengua de Señas Mexicana.,PERSONA SORDO INFORMACIÓN LENGUA SEÑAS MÉXICO DERECHO TENER,propuesta-equipo
+S018,derechos,Todos los ciudadanos tienen derecho a la salud.,,
+S019,derechos,El servicio es gratuito para todas las personas.,,
+S020,salud,¿Dónde está el hospital?,,
+S021,salud,Necesito una cita con el médico mañana.,,
+S022,salud,Hoy mi familia y yo queremos información sobre el servicio de salud.,,
+S023,educacion,Mañana voy a la universidad a estudiar.,MAÑANA YO UNIVERSIDAD IR ESTUDIAR,propuesta-equipo
+S024,educacion,Los estudiantes sordos necesitan intérprete en la escuela.,,
+S025,educacion,¿Cuándo es la inscripción?,,
+S026,educacion,Yo estudio en la universidad.,,
+S027,educacion,Mi amigo es sordo y trabaja aquí.,,
+S028,vida-diaria,¿Cómo te llamas?,,
+S029,vida-diaria,¿Dónde vives?,,
+S030,vida-diaria,Ayer no fui al trabajo.,,
+S031,vida-diaria,Quiero agua por favor.,,
+S032,vida-diaria,Yo no entiendo.,,
+S033,vida-diaria,¿Quién es tu familia?,,
+S034,vida-diaria,Nosotros vamos a comer en casa.,,
+S035,vida-diaria,¿Puedes ayudarme?,,
+S036,vida-diaria,Sí entiendo la Lengua de Señas Mexicana.,,
+S037,vida-diaria,¿Cuántos años tienes?,,
+S038,vida-diaria,Mi teléfono es 2281234567.,,
+S039,vida-diaria,Ella vive en Xalapa.,,
+S040,vida-diaria,¿Por qué no vienes hoy?,,
